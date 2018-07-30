@@ -13,14 +13,18 @@ fi
 echo "cd $DIR"
 cd "$DIR"
 
+shopt -s extglob #For Extended Globbing !(*.*)
+
 #make folders for extension names
 echo "***creating folders for extension names"
-FOLDERS=$(ls -1 | rev | cut -d '.' -f 1 | rev | tr '[:lower:]' '[:upper:]' | sort | uniq)
+FOLDERS=$(ls -1I !(*.*) | rev | cut -d '.' -f 1 | rev | tr '[:lower:]' '[:upper:]' | sort | uniq)
 for folders in $FOLDERS; do
   if [ $folders != 'INI' ]; then
     mkdir -p $folders
   fi
 done
+
+#exit 1
 
 #move file to their extension folders
 echo "***moving file to their extension folders"
